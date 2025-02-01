@@ -12,12 +12,6 @@ async function init() {
     app.use(bodyParser.json());
 
     app.use("/api", router);
-    app.use("/", (req, res) => {
-      res.status(200).json({
-        message: "Welcome to my API",
-        data: null,
-      });
-    });
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
