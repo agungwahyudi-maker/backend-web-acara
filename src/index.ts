@@ -8,9 +8,8 @@ async function init() {
     const result = await db();
     console.log("Database status :", result);
     const app = express();
-    app.use(bodyParser.json());
-
     const PORT = 3000;
+    app.use(bodyParser.json());
 
     app.use("/api", router);
     app.use("/", (req, res) => {
