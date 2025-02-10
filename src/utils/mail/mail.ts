@@ -15,13 +15,13 @@ const transporter = nodemailer.createTransport({
   requireTLS: true,
 });
 
-interface ISendEmail {
+export interface ISendMail {
   from: string;
   to: string;
   subject: string;
   html: string;
 }
-const sendMail = async ({ ...mailParams }: ISendEmail) => {
+export const sendMail = async ({ ...mailParams }: ISendMail) => {
   try {
     const result = await transporter.sendMail({
       ...mailParams,
@@ -33,9 +33,7 @@ const sendMail = async ({ ...mailParams }: ISendEmail) => {
   }
 };
 
-const renderMailHtml = async (template: string, data: any): Promise<String> => {
-  const content = await ejs.renderFile(path.join(__dirname, `templates/${template}`), data);
-  return content as string;
+export const renderMailHtml = async (template: string, data: any): Promise<String> => {
+  const content = (await ejs.renderFile(path.join(__dirname, `templates/${template}`), data)) as unknown as string;
+  return content;
 };
-
-export { sendMail, renderMailHtml };

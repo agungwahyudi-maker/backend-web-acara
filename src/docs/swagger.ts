@@ -28,6 +28,16 @@ const doc = {
         identifier: "agung",
         password: "agung",
       },
+      RegisterRequest: {
+        fullName: "Joni joni",
+        username: "joni2024",
+        email: "joni@gmail.com",
+        password: "123",
+        consfirmPassword: "123",
+      },
+      ActivationRequest: {
+        code: "Aktivasi request Berhasil",
+      },
     },
   },
 };

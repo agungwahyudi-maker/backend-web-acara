@@ -21,7 +21,19 @@ type TLogin = {
 const registerValidateSchema = Yup.object({
   fullName: Yup.string().required(),
   username: Yup.string().required(),
-  password: Yup.string().required(),
+  password: Yup.string()
+    .required()
+    .min(6, "Password must be six characters")
+    .test("at-least-one-uppercase-letter", "Contains at least one Uppercase letter", (value) => {
+      if (!value) return false;
+      const regex = /^(?=.*[A-Z])/;
+      return regex.test(value);
+    })
+    .test("at-least-one-number", "Contains at least one number", (value) => {
+      if (!value) return false;
+      const regex = /^(?=.*\d)/;
+      return regex.test(value);
+    }),
   email: Yup.string().required(),
   confirmPassword: Yup.string()
     .required()
@@ -131,6 +143,34 @@ export default {
       res.status(200).json({
         message: "Success Get User Profile",
         data: result,
+      });
+    } catch (error) {
+      const err = error as unknown as Error;
+      res.status(400).json({
+        message: err.message,
+        data: null,
+      });
+    }
+  },
+  async activation(req: Request, res: Response) {
+    /**
+     #swagger.tags=['Auth]
+     #swagger.requestBody={
+      required:true,
+      schema:{$ref:'#/components/schemas/ActivationRequest'}
+     }
+     * 
+     */
+    try {
+      const { code } = req.body as { code: string };
+      const user = await UserModel.findOneAndUpdate({
+        activationCode: code,
+        isActive: true,
+        new: true,
+      });
+      res.status(200).json({
+        message: "User succesfully activated",
+        data: user,
       });
     } catch (error) {
       const err = error as unknown as Error;
