@@ -96,6 +96,7 @@ export default {
             username: identifier,
           },
         ],
+        isActive: true,
       });
       if (!userByIdentifier) {
         return res.status(403).json({
@@ -154,7 +155,7 @@ export default {
   },
   async activation(req: Request, res: Response) {
     /**
-     #swagger.tags=['Auth]
+     #swagger.tags=['Auth']
      #swagger.requestBody={
       required:true,
       schema:{$ref:'#/components/schemas/ActivationRequest'}
@@ -163,11 +164,17 @@ export default {
      */
     try {
       const { code } = req.body as { code: string };
-      const user = await UserModel.findOneAndUpdate({
-        activationCode: code,
-        isActive: true,
-        new: true,
-      });
+      const user = await UserModel.findOneAndUpdate(
+        {
+          activationCode: code,
+        },
+        {
+          isActive: true,
+        },
+        {
+          new: true,
+        }
+      );
       res.status(200).json({
         message: "User succesfully activated",
         data: user,
@@ -175,7 +182,7 @@ export default {
     } catch (error) {
       const err = error as unknown as Error;
       res.status(400).json({
-        message: err.message,
+        message: "halo",
         data: null,
       });
     }

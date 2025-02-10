@@ -118,7 +118,9 @@
     },
     "/auth/activation": {
       "post": {
-        "tags": [],
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -203,7 +205,7 @@
         "properties": {
           "code": {
             "type": "string",
-            "example": "Aktivasi request Berhasil"
+            "example": "asdd"
           }
         },
         "xml": {

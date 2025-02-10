@@ -36,7 +36,7 @@ const doc = {
         consfirmPassword: "123",
       },
       ActivationRequest: {
-        code: "Aktivasi request Berhasil",
+        code: "asdd",
       },
     },
   },
